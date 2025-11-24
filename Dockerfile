@@ -1,4 +1,4 @@
-ARG CADDY_VERSION="v2.9.1"
+ARG CADDY_VERSION="v2.10.2"
 
 FROM golang:1.25-alpine AS builder
 
@@ -14,15 +14,10 @@ COPY ./ /builder
 RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
 
 RUN xcaddy build \
-    --with github.com/caddy-dns/alidns \
-    --with github.com/caddy-dns/cloudflare \
-    --with github.com/greenpau/caddy-security \
-    --with github.com/yroc92/postgres-storage \
-    --with github.com/d7z-project/caddy-gitea-pages \
-    --with github.com/mholt/caddy-grpc-web \
+    --with github.com/yikotee/certmagic-cos/cos \
     --output /builder/bin/caddy
 
-FROM alpine:3.14
+FROM alpine:3
 
 ENV TZ=Asia/Shanghai
 
